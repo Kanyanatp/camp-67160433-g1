@@ -5,12 +5,14 @@
 @section('content')
 <h1>Workshop #HTML - FORM</h1>
 
-<form onsubmit="validateForm(event)">
+<form id="myForm" action="{{ route('form.store') }}" method="POST" enctype="multipart/form-data" onsubmit="validateForm(event)">
+
+    @csrf
 
     <div class="row mb-3">
         <label class="col-sm-4 col-form-label">ชื่อ</label>
         <div class="col-sm-8">
-            <input type="text" id="fname" class="form-control">
+            <input type="text" id="fname" name="fname" class="form-control">
             <div class="valid-feedback">ถูกต้อง</div>
             <div class="invalid-feedback">โปรดระบุชื่อ</div>
         </div>
@@ -19,7 +21,7 @@
     <div class="row mb-3">
         <label class="col-sm-4 col-form-label">สกุล</label>
         <div class="col-sm-8">
-            <input type="text" id="lname" class="form-control">
+            <input type="text" id="lname" name="lname" class="form-control">
             <div class="valid-feedback">ถูกต้อง</div>
             <div class="invalid-feedback">โปรดระบุนามสกุล</div>
         </div>
@@ -28,7 +30,7 @@
     <div class="row mb-3">
         <label class="col-sm-4 col-form-label">วันเดือนปีเกิด</label>
         <div class="col-sm-8">
-            <input type="date" id="birthday" class="form-control">
+            <input type="date" id="birthday" name="birthday" class="form-control">
             <div class="valid-feedback">ถูกต้อง</div>
             <div class="invalid-feedback">โปรดระบุวันเดือนปีเกิด</div>
         </div>
@@ -37,7 +39,7 @@
     <div class="row mb-3">
         <label class="col-sm-4 col-form-label">อายุ</label>
         <div class="col-sm-8">
-            <input type="number" id="age" class="form-control">
+           <input type="number" id="age" name="age" class="form-control">
             <div class="valid-feedback">ถูกต้อง</div>
             <div class="invalid-feedback">โปรดระบุอายุ</div>
         </div>
@@ -47,25 +49,25 @@
         <label class="col-sm-4 col-form-label">เพศ</label>
         <div class="col-sm-8">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender">
+                <input class="form-check-input" type="radio" name="gender" value="ชาย">
                 <label class="form-check-label">ชาย</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender">
+                <input class="form-check-input" type="radio" name="gender" value="หญิง">
                 <label class="form-check-label">หญิง</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender">
+                <input class="form-check-input" type="radio" name="gender" value="อื่นๆ">
                 <label class="form-check-label">อื่นๆ</label>
             </div>
-            <div class="invalid-feedback" id="genderError">โปรดระบุเพศ</div>
+            <div class="invalid-feedback" id="genderError" style="display:none">โปรดระบุเพศ</div>
         </div>
     </div>
 
     <div class="row mb-3">
         <label class="col-sm-4 col-form-label">รูป</label>
         <div class="col-sm-8">
-            <input type="file" id="photo" class="form-control">
+           <input type="file" id="photo" name="photo" class="form-control">
             <div class="valid-feedback">ถูกต้อง</div>
             <div class="invalid-feedback">โปรดใส่รูป</div>
         </div>
@@ -74,7 +76,7 @@
     <div class="row mb-3">
         <label class="col-sm-4 col-form-label">ที่อยู่</label>
         <div class="col-sm-8">
-            <textarea id="address" class="form-control" rows="3"></textarea>
+            <textarea id="address" name="address" class="form-control" rows="3"></textarea>
             <div class="valid-feedback">ถูกต้อง</div>
             <div class="invalid-feedback">โปรดระบุที่อยู่</div>
         </div>
@@ -83,7 +85,7 @@
     <div class="row mb-3">
         <label class="col-sm-4 col-form-label">สีที่ชอบ</label>
         <div class="col-sm-8">
-            <select id="fav_color" class="form-select">
+            <select id="fav_color" name="fav_color" class="form-select">
                 <option value="">-- เลือกสี --</option>
                 <option value="red">แดง</option>
                 <option value="blue">น้ำเงิน</option>
@@ -98,25 +100,25 @@
         <label class="col-sm-4 col-form-label">แนวเพลงที่ชอบ</label>
         <div class="col-sm-8">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="music">
+                <input class="form-check-input" type="checkbox" name="music[]" value="Pop">
                 <label class="form-check-label">Pop</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="music">
+                <input class="form-check-input" type="checkbox" name="music[]" value="Rock">
                 <label class="form-check-label">Rock</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="music">
+                <input class="form-check-input" type="checkbox" name="music[]" value="Jazz">
                 <label class="form-check-label">Jazz</label>
             </div>
-            <div class="invalid-feedback" id="musicError">โปรดเลือกแนวเพลง</div>
+            <div class="invalid-feedback" id="musicError" style="display:none">โปรดเลือกแนวเพลง</div>
         </div>
     </div>
 
     <div class="row mb-4">
         <div class="col-sm-8 offset-sm-4">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="agree">
+                <input class="form-check-input" type="checkbox" id="agree" name="agree">
                 <label class="form-check-label">ยินยอมให้เก็บข้อมูล</label>
                 <div class="invalid-feedback">ต้องยินยอมก่อน</div>
             </div>
@@ -140,6 +142,7 @@
     <script>
 function validateForm(event){
     event.preventDefault()
+    let isValid = true;
 
     let fname = document.getElementById('fname')
     let lname = document.getElementById('lname')
@@ -225,6 +228,12 @@ function validateForm(event){
     }else{
         agree.classList.remove('is-invalid')
     }
+    if(isValid){
+        document.getElementById('myForm').submit();
+    }
 }
     </script>
 @endpush
+
+
+
