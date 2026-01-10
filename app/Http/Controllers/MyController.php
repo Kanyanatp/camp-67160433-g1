@@ -24,6 +24,13 @@ class MyController extends Controller
     }
     function store(Request $request){
         $data = $request->all();
-        return view('myview.result', compact('data'));
+
+        if ($request->hasFile('photo')) {
+        $file = $request->file('photo');
+        $path = $file->store('uploads', 'public');
+        $data['photo_path'] = $path;
+        }
+         return view('myview.result', compact('data'));
     }
 }
+
